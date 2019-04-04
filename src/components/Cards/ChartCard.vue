@@ -3,7 +3,7 @@
     <template slot="header">
       <h4 v-if="$slots.title || title" class="card-title">
         <slot name="title">
-          {{title}}
+          {{title}}ggg
         </slot>
       </h4>
       <p class="card-category">

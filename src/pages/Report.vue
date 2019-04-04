@@ -6,7 +6,7 @@
       <div class="field">
         <label class="label">Username</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input is-success" type="text" placeholder="Username" v-model="data.username" >
+          <input class="input  is-success" type="text" :value="active" name="username" readonly>
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -51,12 +51,22 @@ export default {
       data: {
         username: '',
         tel: '',
-        message: ''
+        message: '',
+        status: ''
       },
       active: ''
     }
   },
+  created: function () {
+    this.pullData()
+  },
   methods: {
+    pullData () {
+      let that = this
+      firebase.database().ref('/active/').on('value', function(snapshot) {
+        that.active = snapshot.val()
+      })
+    },
     add () {
       swal({
         title: 'Are you sure?',
@@ -67,14 +77,13 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes it\'s'
       }).then((result) => {
+        this.data.username = this.active
+        this.data.status = 'false'
         firebase.database().ref('report').push(this.data)
-        this.data.username = ''
-        this.data.tel = ''
-        this.data.message = ''
+        this.data = ''
         if (result.value) {
           swal(
-            'Deleted!',
-            'Your file has been deleted.',
+            'Success!',
             'success'
           )
         }

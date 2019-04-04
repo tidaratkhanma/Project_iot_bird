@@ -11,9 +11,9 @@
       <div class="logo">
         <a href="#" class="simple-text">
             <div class="logo-img">
-                <img src="@/assets/img/vue-logo.png" alt="">
+                <img src="@/assets/img/45667878_1157398571090422_3816164045489176576_n.jpg" alt="">
             </div>
-           IoT Bird Repellent 
+           IoT Bird Repellent
         </a>
       </div>
       <slot>
@@ -55,7 +55,7 @@ export default {
     },
     activeColor: {
       type: String,
-      default: "success",
+      default: "info",
       validator: value => {
         let acceptedValues = [
           "primary",

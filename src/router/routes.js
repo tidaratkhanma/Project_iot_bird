@@ -13,6 +13,7 @@ import Customer from "@/pages/Customer.vue";
 import Statistics from "@/pages/Statistics.vue";
 import show_report from "@/pages/show_report.vue";
 import setting from "@/pages/setting.vue";
+import setting_site from "@/pages/setting_site.vue";
 import Login from '@/components/Login'
 const routes = [
   {
@@ -31,8 +32,8 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "ATM",
-        name: "ATM FITM",
+        path: "ATM/:id",
+        name: "SITE",
         component: ATM
       },
       {
@@ -74,10 +75,14 @@ const routes = [
         path: "show_report",
         name: "show report",
         component: show_report
+      },
+      {
+        path: "setting_site",
+        name: "setting site",
+        component: setting_site
       }
     ]
-  },
-  { path: "*", component: NotFound }
+  }
 ];
 
 /**

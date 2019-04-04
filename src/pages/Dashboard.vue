@@ -1,20 +1,23 @@
 <template>
   <div>
-    <!-- <input type="text" name="" value="" v-model="data.type">
-    <input type="text" name="" value="" v-model="data.title">
-    <input type="text" name="" value="" v-model="data.value">
-    <button type="button" name="button" @click="insert1()">ok</button> -->
-    <!-- {{moisture.moisture[0]}} -->
     <div class="row">
-      <div class="col-md-6 col-xl-6" v-for="stats in location" >
+      <div class="col-md-6 col-xl-6" v-for = "site in Site" >
         <stats-card>
-          <div class="icon-big text-center" :class="`icon-${stats.type}`" slot="header">
-            <i :class="stats.icon"></i>
+          <div v-if = "site.moisture<7700" class="icon-big text-center" :class="'icon-success'" slot="header">
+             <i class="ti-twitter-alt"></i>
           </div>
-          <div class="numbers" slot="content">
-            {{stats.title}}
-            <p>สถานะ : {{stats.value}} </p>
+          <div v-else-if = "site.moisture<15300" class="icon-big text-center" :class="'icon-warning'" slot="header">
+             <i class="ti-twitter-alt"></i>
           </div>
+          <div v-else-if = "site.moisture>15300" class="icon-big text-center" :class="'icon-danger'" slot="header">
+             <i class="ti-twitter-alt"></i>
+          </div>
+        <div class="numbers" slot="content">
+        {{site.name_site}}
+          <p v-if = "site.moisture<7700 ">สถานะ : ปกติ  </p>
+            <p v-else-if = "site.moisture<15300 ">สถานะ :น้ำยาใกล้หมด  </p>
+            <p v-else-if = "site.moisture>15300 ">สถานะ : น้ำยาหมด </p>
+        </div>
         </stats-card>
       </div>
     </div>
@@ -31,41 +34,8 @@ export default {
   },
   data() {
     return {
-      data: {
-        type: '',
-        icon: 'ti-twitter-alt',
-        title: '',
-        value: ''
-      },
-      statsCards: [
-        {
-          type: "success",
-          icon: "ti-twitter-alt",
-          title: "ตู้ ATM FITM",
-          value: "ปกติ"
-        },
-        {
-          type: "warning",
-          icon: "ti-twitter-alt",
-          title: "ตึกศิรินทร",
-          value: "น้ำยาใกล้หมด"
-        },
-        {
-          type: "success",
-          icon: "ti-twitter-alt",
-          title: "ลานปาล์ม",
-          value: "ปกติ"
-        },
-        {
-          type: "danger",
-          icon: "ti-twitter-alt",
-          title: "ใต้หลังคา",
-          value: "น้ำยาหมด"
-        }
-      ],
-      location: '',
-      moisture: '',
-      data_moisture: ''
+      Site: '',
+      colorB: 'icon-success'
     }
   },
   created: function () {
@@ -74,37 +44,20 @@ export default {
   methods: {
     pullData () {
       let that = this
-      firebase.database().ref('/message/').on('value', function(snapshot) {
-        that.message = snapshot.val()
-      })
-      firebase.database().ref('/location1/').on('value', function(snapshot) {
-        that.location = snapshot.val()
-      })
-      firebase.database().ref('/moisture:/').on('value', function(snapshot) {
-        that.moisture = snapshot.val()
-        console.log(that.moisture.moisture[0])
-        if (that.moisture.moisture[0] > 15300) {
-          firebase.database().ref('location1').child('-LRtpIwqM7IPLkvAxyww').update({
-            type: 'danger',
-            value: 'น้ำยาหมด'
-          })
-        } else if (that.moisture.moisture[0] > 7700) {
-          firebase.database().ref('location1').child('-LRtpIwqM7IPLkvAxyww').update({
-            type: 'warning',
-            value: 'น้ำใกล้ยาหมด'
-          })
-        } else if (that.moisture.moisture[0] < 7700) {
-          firebase.database().ref('location1').child('-LRtpIwqM7IPLkvAxyww').update({
-            type: 'success',
-            value: 'ปกติ'
-          })
-        }
-        // that.moisture.moisture[0]
-      })
+      firebase.database().ref('/Site/').on('value', function(snapshot) {
+         that.Site = snapshot.val()
+         that.site()
+        })
     },
-    insert1 () {
-      console.log('sd');
-      firebase.database().ref('location1').push(this.data)
+    site () {
+      // alert('zxfsff')
+      for (var variable in this.Site) {
+        if (this.activeSite === variable) {
+          this.showsite = this.Site[variable]
+            // this.colorB = 'icon-success'
+
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
-  <div class="moving-arrow" :style="arrowStyle">
-  </div>
+  <!-- <div class="moving-arrow" :style="arrowStyle">
+  </div> -->
 </template>
 <script>
 export default {

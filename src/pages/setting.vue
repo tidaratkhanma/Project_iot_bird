@@ -4,6 +4,7 @@
   <div class="column">
     <div class="field">
       <div class="control">
+        <label>Username</label>
         <input class="input is-primary" v-model="data.username" type="text" placeholder="Username">
       </div>
     </div>
@@ -11,6 +12,7 @@
   <div class="column">
     <div class="field">
       <div class="control">
+        <label>Password</label>
         <input class="input is-primary" v-model="data.password" type="password" placeholder="Password">
       </div>
     </div>
@@ -18,6 +20,7 @@
   <div class="column">
     <div class="field">
   <div class="control">
+        <label>Role</label><br>
     <div class="select is-primary" placeholder="Status">
       <select  v-model="data.status" >
         <option>user</option>
@@ -30,6 +33,7 @@
   <div class="column">
     <div class="field">
   <div class="control">
+        <label>Item</label><br>
     <div class="select is-primary" placeholder="Status">
       <select  v-model="data.item" >
         <option>yes</option>
@@ -39,7 +43,7 @@
   </div>
 </div>
   </div>
-  <div class="column is-one-fifth">
+  <div class="column is-one-fifth"><br>
     <a class="button is-info is-outlined" @click="add()">Add</a>
   </div>
 </div>
@@ -65,7 +69,6 @@
            :items="items"
            :fields="fields"
            :current-page="currentPage"
-           :per-page="perPage"
            :filter="filter"
            :sort-by.sync="sortBy"
            :sort-desc.sync="sortDesc"
@@ -171,12 +174,29 @@ export default {
       })
     },
     add () {
-      firebase.database().ref('member').push(this.data)
-      this.data.username = ''
-      this.data.password = ''
-      this.data.status = ''
-      this.data.item = ''
-      this.pullData()
+      var st = true
+      for (var mai in this.show_member) {
+        if (this.data.username  === this.show_member[mai].username) {
+          st = false
+          swal(
+            'Warning!',
+            'Cannot add information!',
+            'warning'
+          )
+          this.data.username = ''
+          this.data.password = ''
+          this.data.status = ''
+          this.data.item = ''
+        }
+      }
+      if (st === true) {
+        firebase.database().ref('member').push(this.data)
+        this.data.username = ''
+        this.data.password = ''
+        this.data.status = ''
+        this.data.item = ''
+        this.pullData()
+      }
     },
     deleted (key) {
       swal({
