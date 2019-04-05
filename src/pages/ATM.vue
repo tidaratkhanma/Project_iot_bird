@@ -1,24 +1,27 @@
 <template lang="html">
   <div class="">
 
+    <!-- {{activityChart.data.series}} -->
 
 
 <b-container class="bv-example-row">
-  <b-row>
-    <b-col cols="4">  <stats-card>
-        <div class="icon-big text-center" :class="colorB" slot="header">
-          <i class="ti-twitter-alt"></i>
-        </div>
-        <div class="numbers" slot="content">
-          {{showsite.name_site}}
-          <p>สถานะ : {{status}}  </p>
-        </div>
-      </stats-card>
-    </b-col>
-  </b-row>
-</b-container>
-    <div class="row">
-      <div class="">
+  <div class="columns is-desktop">
+  <div class="column">
+    <stats-card>
+           <div class="icon-big text-center" :class="colorB" slot="header">
+             <i class="ti-twitter-alt"></i>
+           </div>
+           <div class="numbers" slot="content">
+             {{showsite.name_site}}
+             <p>สถานะ : {{status}}  </p>
+           </div>
+   </stats-card>
+  </div>
+  <div class="column"></div>
+  <div class="column"></div>
+</div>
+</b-container> <br>
+<button type="button" name="button" @click="moisture()">update hour</button> <br>
           <article class="message ">
             <div class="message-body">
               <b-card-text>
@@ -76,8 +79,6 @@
                </span> -->
             </div>
           </article>
-      </div>
-    </div>
 </br>
     <span v-if = "item === 'yes'" >
       <div class="columns">
@@ -211,20 +212,32 @@
         </div>
       </div>
     </span>
-
-    <chart-card
+    <br>
+<b>สภาพแวดล้อมที่มีผลต่อการละเหยของน้ำยา </b>  <br>  <br>
+    <chart-card title=""
                 :chart-data="activityChart.data"
                 :chart-options="activityChart.options">
       <span slot="footer">
-        <a class="button is-info  is-focused">show report</a>
+          <a class="button is-danger  is-focused" v-if="show === 't'" @click="sw_show('f')">close  report</a>
+        <a class="button is-info  is-focused" v-if="show === 'f'"  @click="sw_show('t')">show report</a>
       </span>
       <div slot="legend">
-        <i class="fa fa-circle text-info"></i> นกพิราบ
-        <i class="fa fa-circle text-warning"></i> นกกระจอก
+        <i class="fa fa-circle text-info"></i> อัตราการเปลียนแปลงของน้ำยาที่ลดลง
+        <!-- <i class="fa fa-circle text-warning"></i> นกกระจอก -->
       </div>
     </chart-card>
 
-    <chart-card title=""
+<div v-if="show === 't'">
+  <article class="message is-link">
+    <div class="message-body">
+      <strong>จำนวนนกที่ลดลงหลังการติดตั้งเครื่องไล่นก :</strong> 10 ตัว <br>
+      <strong>ระยะเวลาที่น้ำยาสามารถอยู่ได้ :</strong> 2-3 วัน <br>
+      <strong>สถิติการเติมน้ำยา :</strong> 1-2 วัน  <br>
+      <strong>อัตราการสิ้นเปลืองของน้ำยา : </strong> เมื่อมีอุณหภูมิ 30 C<br>
+    </div>
+  </article>
+</div>
+    <!-- <chart-card title=""
                 sub-title=""
                 :chart-data="usersChart.data"
                 :chart-options="usersChart.options">
@@ -236,7 +249,8 @@
         <i class="fa fa-circle text-danger"></i> Click
         <i class="fa fa-circle text-warning"></i> Click Second Time
       </div>
-    </chart-card>
+    </chart-card> -->
+
   </div>
 </template>
 
@@ -251,7 +265,8 @@ export default {
   },
   data() {
    return {
-        max: 100,
+     show: 'f',
+     max:  100,
      Site: '',
      activeSite: '',
      showsite: '',
@@ -265,24 +280,8 @@ export default {
      active: '',
      activityChart: {
        data: {
-         labels: [
-           "19/11/61",
-           "20/11/61",
-           "21/11/61",
-           "22/11/61",
-           "23/11/61",
-           "24/11/61",
-           "25/11/61",
-           "26/11/61",
-           "27/11/61",
-           "28/11/61",
-           "29/11/61",
-           "30/11/61"
-         ],
-         series: [
-           [5, 10, 15, 20, 25, 30, 35, 5, 9, 25, 8, 1],
-           [1, 27, 34, 13, 6, 33, 19, 38, 10, 15, 11, 25]
-         ]
+         labels: [],
+         series: []
        },
        options: {
          seriesBarDistance: 10,
@@ -324,13 +323,71 @@ export default {
          showLine: true,
          showPoint: false
        }
-     }
+     },
+     a: []
    }
  },
+ mounted() {
+   this.pullData()
+  },
  created: function () {
      this.pullData()
   },
   methods: {
+    sw_show (data) {
+        this.show = data
+    },
+    moisture () { //คำนวนอัตราการระเหยของน้ำยา
+      for (var variable in this.Site) {
+          var num = 0
+          var data = this.Site[variable].Temperature
+      if (this.Site[variable].Temperature < 10) {
+        num = this.Site[variable].moisture + 9.3
+        firebase.database().ref('Site').child(variable).update({
+          moisture: num
+        })
+        firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+        firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+       }
+      else if (this.Site[variable].Temperature < 20) {
+        num = this.Site[variable].moisture + 17.5
+        firebase.database().ref('Site').child(variable).update({
+          moisture: num
+        })
+      firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+      firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+      }
+      else if (this.Site[variable].Temperature < 30) {
+        num = this.Site[variable].moisture + 30.5
+        firebase.database().ref('Site').child(variable).update({
+          moisture: num
+        })
+        firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+        firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+        }
+      else if (this.Site[variable].Temperature < 40) {
+          num = this.Site[variable].moisture + 40.5
+          firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+          firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+        }
+        else if (this.Site[variable].Temperature < 50) {
+          num = this.Site[variable].moisture + 50.5
+          firebase.database().ref('Site').child(variable).update({
+            moisture: num
+          })
+          firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+          firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+        }
+        else {
+          num = this.Site[variable].moisture + 60.5
+          firebase.database().ref('Site').child(variable).update({
+            moisture: num
+          })
+          firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
+          firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
+        }
+      }
+    },
     pullData () {
       let that = this
       firebase.database().ref('/Site/').on('value', function(snapshot) {
@@ -339,6 +396,7 @@ export default {
         })
       firebase.database().ref('/activeSite/').on('value', function(snapshot) {
          that.activeSite = snapshot.val()
+         that.hour()
          that.site()
        })
        firebase.database().ref('/active/').on('value', function(snapshot) {
@@ -353,8 +411,22 @@ export default {
          that.item = snapshot.val()
          that.site()
        })
+    },
+    hour () {
+      this.activityChart.data.series = []
+       this.activityChart.data.labels = []
+      var data = []
+       var data1 = []
+      var activeSite1 = this.activeSite
+        for (var variable1 in this.Site[activeSite1].moisture_h) {
+          data.push(this.Site[activeSite1].moisture_h[variable1])
+        }
+        for (var variable1 in this.Site[activeSite1].Temperature_h) {
+          this.activityChart.data.labels.push(this.Site[activeSite1].Temperature_h[variable1])
+        }
 
-
+      this.activityChart.data.series.push(data)
+       // that.activityChart.data.labels.push(data1)
     },
     site () {
       // alert('zxfsff')
