@@ -21,7 +21,6 @@
   <div class="column"></div>
 </div>
 </b-container> <br>
-<button type="button" name="button" @click="moisture()">update hour</button> <br>
           <article class="message ">
             <div class="message-body">
               <b-card-text>
@@ -43,7 +42,7 @@
                   </div>
                   <div class="column">
                     <div class="row">
-                      <div class="button  is-info " @click="save()"> save </div> &nbsp;&nbsp;
+                      <div class="button  is-info " @click="save(showsite.num_day, showsite.Last_maintenance)"> save </div> &nbsp;&nbsp;
                       <div class="button  is-danger " @click="Cancle()"> Cancle </div>
                     </div>
                   </div>
@@ -117,13 +116,13 @@
             </div>
             <div class="buttons has-addons" v-if ="showsite.Sportlight4 === '1'">
                 Sportlight 4 &nbsp;&nbsp;&nbsp;
-              <span class="button is-info" @click="Sportlight4('1')" >Yes</span>
-              <span class="button " @click="Sportlight4('0')" >No</span>
+              <span class="button is-info"  @click="Sportlight4('1')" >Yes</span>
+              <span class="button "  @click="Sportlight4('0')" >No</span>
             </div>
             <div class="buttons has-addons" v-if ="showsite.Sportlight4 === '0'">
                 Sportlight 4 &nbsp;&nbsp;&nbsp;
-              <span class="button" @click="Sportlight4('1')" >Yes</span>
-              <span class="button is-danger is-selected" @click="Sportlight4('0')" >No</span>
+              <span class="button"  @click="Sportlight4('1')" >Yes</span>
+              <span class="button is-danger is-selected"  @click="Sportlight4('0')" >No</span>
             </div>
 
         </div>
@@ -136,83 +135,85 @@
               GunSound 1 &nbsp;&nbsp;&nbsp;
             <span class="button is-info" @click="GunSound1('1')" >Yes</span>
             <span class="button " @click="GunSound1('0')" >No</span>
-            <span class="button " @click="GunSound1('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound1('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound1 === '0'">
               GunSound 1 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound1('1')" >Yes</span>
             <span class="button is-danger is-selected" @click="GunSound1('0')" >No</span>
-            <span class="button " @click="GunSound1('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound1('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound1 === '2'">
               GunSound 1 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound1('1')" >Yes</span>
             <span class="button" @click="GunSound1('0')" >No</span>
-            <span class="button is-success is-selected" @click="GunSound1('2')" >Auto</span>
+            <!-- <span class="button is-success is-selected" @click="GunSound1('2')" >Auto</span> -->
           </div>
 
           <div class="buttons has-addons" v-if ="showsite.Gunsound2 === '1'">
               GunSound 2 &nbsp;&nbsp;&nbsp;
             <span class="button is-info" @click="GunSound2('1')" >Yes</span>
             <span class="button " @click="GunSound2('0')" >No</span>
-            <span class="button " @click="GunSound2('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound2('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound2 === '0'">
               GunSound 2 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound2('1')" >Yes</span>
             <span class="button is-danger is-selected" @click="GunSound2('0')" >No</span>
-            <span class="button " @click="GunSound2('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound2('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound2 === '2'">
               GunSound 2 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound2('1')" >Yes</span>
             <span class="button" @click="GunSound2('0')" >No</span>
-            <span class="button is-success is-selected" @click="GunSound2('2')" >Auto</span>
+            <!-- <span class="button is-success is-selected" @click="GunSound2('2')" >Auto</span> -->
           </div>
 
           <div class="buttons has-addons" v-if ="showsite.Gunsound3 === '1'">
               GunSound 3 &nbsp;&nbsp;&nbsp;
             <span class="button is-info" @click="GunSound3('1')" >Yes</span>
             <span class="button " @click="GunSound3('0')" >No</span>
-            <span class="button " @click="GunSound3('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound3('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound3 === '0'">
               GunSound 3 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound3('1')" >Yes</span>
             <span class="button is-danger is-selected" @click="GunSound3('0')" >No</span>
-            <span class="button " @click="GunSound3('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound3('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound3 === '2'">
               GunSound 3 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound3('1')" >Yes</span>
             <span class="button" @click="GunSound3('0')" >No</span>
-            <span class="button is-success is-selected" @click="GunSound3('2')" >Auto</span>
+            <!-- <span class="button is-success is-selected" @click="GunSound3('2')" >Auto</span> -->
           </div>
 
           <div class="buttons has-addons" v-if ="showsite.Gunsound4 === '1'">
               GunSound 4 &nbsp;&nbsp;&nbsp;
-            <span class="button is-info" @click="GunSound4('1')" >Yes</span>
+            <span class="button is-info"  @click="GunSound4('1')" >Yes</span>
             <span class="button " @click="GunSound4('0')" >No</span>
-            <span class="button " @click="GunSound4('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound4('2')" >auto</span> -->
           </div>
           <div class="buttons has-addons" v-if ="showsite.Gunsound4 === '0'">
               GunSound 4 &nbsp;&nbsp;&nbsp;
-            <span class="button" @click="GunSound4('1')" >Yes</span>
+            <span class="button"  @click="GunSound4('1')" >Yes</span>
             <span class="button is-danger is-selected" @click="GunSound4('0')" >No</span>
-            <span class="button " @click="GunSound4('2')" >auto</span>
+            <!-- <span class="button " @click="GunSound4('2')" >auto</span> -->
           </div>
-          <div class="buttons has-addons" v-if ="showsite.Gunsound4 === '2'">
+          <!-- <div class="buttons has-addons" v-if ="showsite.Gunsound4 === '2'">
               GunSound 4 &nbsp;&nbsp;&nbsp;
             <span class="button" @click="GunSound4('1')" >Yes</span>
             <span class="button" @click="GunSound4('0')" >No</span>
             <span class="button is-success is-selected" @click="GunSound4('2')" >Auto</span>
-          </div>
+          </div> -->
         </div>
       </article>
         </div>
       </div>
     </span>
     <br>
+    <button type="button" name="button" @click="moisture()">update Temp/Humid </button> | <button type="button" name="button" @click="bird()">update bird</button> <br>
+ <br>
 <b>สภาพแวดล้อมที่มีผลต่อการละเหยของน้ำยา </b>  <br>  <br>
     <chart-card title=""
                 :chart-data="activityChart.data"
@@ -228,15 +229,55 @@
     </chart-card>
 
 <div v-if="show === 't'">
-  <article class="message is-link">
-    <div class="message-body">
-      <strong>จำนวนนกที่ลดลงหลังการติดตั้งเครื่องไล่นก :</strong> 10 ตัว <br>
-      <strong>ระยะเวลาที่น้ำยาสามารถอยู่ได้ :</strong> 2-3 วัน <br>
-      <strong>สถิติการเติมน้ำยา :</strong> 1-2 วัน  <br>
-      <strong>อัตราการสิ้นเปลืองของน้ำยา : </strong> เมื่อมีอุณหภูมิ 30 C<br>
+
+    <div class="columns is-mobile">
+      <div class="column  is-one-fifth">
+        <br>
+        ****<br>
+        อัตตราการลดลงของ moisture ที่มีผลมาจาก Temperature<br>
+        Temperature 10 C ลดลง  9.3<br>
+        Temperature 20 C ลดลง  17.5<br>
+        Temperature 30 C ลดลง  30.5<br>
+        Temperature 40 C ลดลง  40.5<br>
+      </div>
+  <div class="column is-one-fifth">
+    <table>
+      <tr>
+        Temperature
+      </tr>
+    <div v-for ="a in activityChart.data.series">
+      <div v-for ="a in activityChart.data.labels">
+            <tr>{{a}}</tr>
+      </div>
     </div>
-  </article>
+  </table>
+  </div>
+  <div class="column">
+    <table>
+      <tr>
+        moisture
+      </tr>
+    <div v-for ="a in activityChart.data.series">
+      <div v-for ="b in a">
+          <tr> {{b}}</tr>
+      </div>
+    </div>
+  </table>
+  </div>
 </div>
+
+</div>
+<article class="message is-link">
+  <div class="message-body">
+      <strong>จำนวนนก ต่อ สัปดาห์</strong>  <br>
+      <strong> - จำนวนนก ก่อนการติดตั้งเครื่องไล่นก :</strong> {{showsite.num_bird}} ตัว<br>
+      <strong> - จำนวนนก หลังการติดตั้งเครื่องไล่นก :</strong> {{showsite.num_b}} ตัว <br>
+      <strong> - จำนวนนก ที่ลดลงหลังการติดตั้งเครื่องไล่นก :</strong> {{showsite.num_bird - showsite.num_b}} ตัว <br>
+
+    <strong>ระยะเวลาที่น้ำยาสามารถอยู่ได้ต่อการเติมแต่ละครั้ง :</strong> {{showsite.day_moisture}} วัน <br>
+    <strong>สถิติการเติมน้ำยา :</strong> {{showsite.num_day}} ครั้ง/เดือน  <br>
+  </div>
+</article>
     <!-- <chart-card title=""
                 sub-title=""
                 :chart-data="usersChart.data"
@@ -334,13 +375,22 @@ export default {
      this.pullData()
   },
   methods: {
+    bird () {
+      var total = 0
+      var num = Math.floor(Math.random() * (this.showsite.num_bird  - 1 + 1)) + 1
+      total = this.showsite.num_bird - num
+      firebase.database().ref('Site').child(this.activeSite).update({
+        num_b: total
+      })
+    },
     sw_show (data) {
         this.show = data
     },
     moisture () { //คำนวนอัตราการระเหยของน้ำยา
       for (var variable in this.Site) {
           var num = 0
-          var data = this.Site[variable].Temperature
+          var data = Math.floor(Math.random() * (40 - 1 + 1)) + 20
+          var Humid  = Math.floor(Math.random() * (80 - 1 + 1)) + 20
       if (this.Site[variable].Temperature < 10) {
         num = this.Site[variable].moisture + 9.3
         firebase.database().ref('Site').child(variable).update({
@@ -386,7 +436,14 @@ export default {
           firebase.database().ref('Site/'+variable + '/moisture_h').push(num)
           firebase.database().ref('Site/'+variable + '/Temperature_h').push(data)
         }
+        firebase.database().ref('Site').child(variable).update({
+          Temperature: data
+        })
+        firebase.database().ref('Site').child(variable).update({
+          Humidity: Humid
+        })
       }
+      this.hour()
     },
     pullData () {
       let that = this
@@ -401,6 +458,7 @@ export default {
        })
        firebase.database().ref('/active/').on('value', function(snapshot) {
         that.active = snapshot.val()
+        that.hour()
         that.site()
       })
        firebase.database().ref('/login/').on('value', function(snapshot) {
@@ -416,17 +474,30 @@ export default {
       this.activityChart.data.series = []
        this.activityChart.data.labels = []
       var data = []
-       var data1 = []
+      var data1 = []
+      var data_Temperature_h = []
       var activeSite1 = this.activeSite
+      var a = 0
+      var b = 0
+      var c = 0
+      var d = 0
         for (var variable1 in this.Site[activeSite1].moisture_h) {
           data.push(this.Site[activeSite1].moisture_h[variable1])
         }
+        c = data.length - 12
+        d = data.length - c
         for (var variable1 in this.Site[activeSite1].Temperature_h) {
-          this.activityChart.data.labels.push(this.Site[activeSite1].Temperature_h[variable1])
+          data_Temperature_h.push(this.Site[activeSite1].Temperature_h[variable1])
+          // this.activityChart.data.labels.push(this.Site[activeSite1].Temperature_h[variable1])
         }
-
-      this.activityChart.data.series.push(data)
-       // that.activityChart.data.labels.push(data1)
+        console.log(data.length);
+        for (var i = c; i < data.length; i++) {
+          data1.push(data[i])
+        }
+        for (var i = c; i < data.length; i++) {
+            this.activityChart.data.labels.push(data_Temperature_h[i])
+        }
+      this.activityChart.data.series.push(data1)
     },
     site () {
       // alert('zxfsff')
@@ -460,9 +531,31 @@ export default {
     Cancle () {
       this.sw = 'true'
     },
-    save () {
+    save (num_day1,Last_maintenance) {
+      num_day1 += 1
       firebase.database().ref('Site').child(this.activeSite).update({
-        Last_maintenance: this.Last_maintenance
+        Last_maintenance: this.Last_maintenance,
+        num_day: num_day1
+      })
+      firebase.database().ref('Site').child(this.activeSite).update({
+        first_maintenance: Last_maintenance
+      })
+      if ( Last_maintenance.substring(5,6) > this.Last_maintenance.substring(5,6)) {
+        var day = +Last_maintenance.substring(8) + +this.Last_maintenance.substring(8)
+      }
+      else if ( Last_maintenance.substring(5,6) == this.Last_maintenance.substring(5,6)) {
+        if ( Last_maintenance.substring(8) > this.Last_maintenance.substring(8)) {
+            var day = (30 - Last_maintenance.substring(8)) + +this.Last_maintenance.substring(8)
+        }
+        else if (Last_maintenance.substring(8) == this.Last_maintenance.substring(8)) {
+          var day = 30
+        }
+        else {
+          var day = +this.Last_maintenance.substring(8) - +Last_maintenance.substring(8)
+        }
+      }
+      firebase.database().ref('Site').child(this.activeSite).update({
+        day_moisture : day
       })
       this.Last_maintenance = ''
       this.sw = 'true'
