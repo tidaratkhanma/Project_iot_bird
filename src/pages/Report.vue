@@ -34,7 +34,7 @@
           <button class="button is-link" @click="add()">Submit</button>
         </div>
         <div class="control">
-          <button class="button is-text">Cancel</button>
+          <button class="button is-text" @click="clear()" >Cancel</button>
         </div>
       </div>
 
@@ -67,27 +67,41 @@ export default {
         that.active = snapshot.val()
       })
     },
+    clear () {
+      this.data.message = ''
+      this.data.tel = ''
+      console.log("dd");
+      this.pullData()
+    },
     add () {
-      swal({
-        title: 'Are you sure?',
-        text: "You want to send a message.",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes it\'s'
-      }).then((result) => {
-        this.data.username = this.active
-        this.data.status = 'false'
-        firebase.database().ref('report').push(this.data)
-        this.data = ''
-        if (result.value) {
-          swal(
-            'Success!',
-            'success'
-          )
-        }
-      })
+      if (this.data.message === '' || this.tel === '') {
+        alert('กรอกข้อความให้ครบ')
+      }
+      else {
+          swal({
+            title: 'Are you sure?',
+            text: "You want to send a message.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes it\'s'
+          }).then((result) => {
+            this.data.username = this.active
+            this.data.status = 'false'
+            firebase.database().ref('report').push(this.data)
+            this.data = ''
+            if (result.value) {
+              swal(
+                'Success!',
+                'success'
+              )
+            }
+            this.data.message = ''
+            this.tel = ''
+          })
+      }
+      this.pullData()
     },
   }
 }

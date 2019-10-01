@@ -4,16 +4,17 @@
     <side-bar>
       <template slot="links"  v-if = "login === 'user'">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-dashboard"/>
-          <sidebar-link v-for="(s,key) in Site" @click.native ="tes" :to="'/ATM/' + key" icon="ti-location-pin" :name="s.name_site"/>
+          <!-- <sidebar-link v-for="(s,key) in Site" @click.native ="tes" :to="'/ATM/' + key" icon="ti-location-pin" :name="s.name_site"/> -->
         <!-- <sidebar-link to="/sirinton" name="sirinton" icon="ti-location-pin"/>
         <sidebar-link to="/Larnplam" name="Larnplam" icon="ti-location-pin"/>
         <sidebar-link to="/car" name="Under the roof" icon="ti-location-pin"/> -->
         <sidebar-link to="/Report" name="Report" icon="ti-comment"/>
+        <!-- <sidebar-link to="/Dashboard" name="Dashboard" icon="ti-comment"/> -->
       </template>
 
       <template slot="links" v-else >
-        <sidebar-link to="/dashboard" name="Dashboard" icon="ti-dashboard"/>
-        <sidebar-link v-for="(s,key) in Site" @click.native ="tes" :to="'/ATM/' + key" icon="ti-location-pin" :name="s.name_site"/>
+        <sidebar-link to="/dashboard" :name="Dashboard" icon="ti-dashboard"/>
+        <!-- <sidebar-link v-for="(s,key) in Site" @click.native ="tes" :to="'/ATM/' + key" icon="ti-location-pin" :name="s.name_site"/> -->
         <!-- <sidebar-link to="/ATM" name="ATM FITM" icon="ti-location-pin"/> -->
         <!-- <sidebar-link to="/sirinton" name="sirinton" icon="ti-location-pin"/>
         <sidebar-link to="/Larnplam" name="Larnplam" icon="ti-location-pin"/>
@@ -48,7 +49,9 @@ export default {
     return {
       login: '',
       report: 0,
-      Site: ''
+      Site: 0,
+      Dashboard: 0
+
     }
   },
   components: {
@@ -66,9 +69,9 @@ export default {
       firebase.database().ref('/login/').on('value', function(snapshot) {
         that.login = snapshot.val()
       })
-      firebase.database().ref('/Site/').on('value', function(snapshot) {
-        that.Site = snapshot.val()
-      })
+      // firebase.database().ref('/Site/').on('value', function(snapshot) {
+      //   that.Site = snapshot.val()
+      // })
       firebase.database().ref('/report/').on('value', function(snapshot) {
         that.report = snapshot.val()
         var count = 0
@@ -80,6 +83,18 @@ export default {
         that.report = 'show report [ ' +count+' ]'
 
       })
+      firebase.database().ref('/Site/').on('value', function(snapshot) {
+         that.Site = snapshot.val()
+         // that.Site()
+         var num = 0
+         for(var a  in that.Site) {
+           if(that.Site[a].moisture > 15300) {
+             num = num + 1
+           }
+         }
+         that.Dashboard = 'dashboard [ '+num+' ]'
+        })
+
     },
     toggleSidebar() {
       if (this.$sidebar.showSidebar) {
@@ -87,7 +102,7 @@ export default {
       }
     },
     tes () {
-    firebase.database().ref('activeSite').set(this.$route.params.id)
+    // firebase.database().ref('activeSite').set(this.$route.params.id)
     }
   }
 };

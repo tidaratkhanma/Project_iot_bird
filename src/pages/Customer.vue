@@ -175,20 +175,6 @@ export default {
         }
       })
 this.pullData()
-    //   const {value: formValues} = swal({
-    //     title: 'Multiple inputs',
-    //     html:
-    //       '<input id="swal-input1" class="swal2-input">',
-    //     focusConfirm: false,
-    //     preConfirm: () => {
-    //       swal(json.stringify(formValues))
-    //       // return [
-    //       //   document.getElementById('swal-input1').value
-    //       // ]
-    //     }
-    //   })
-    //   if (formValues) {
-    //
     }
   }
 }

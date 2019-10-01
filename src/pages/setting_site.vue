@@ -19,6 +19,22 @@
           </div>
         </div>
       </div>
+      <div class="column">
+        <div class="field">
+          <div class="control">
+            <b-form-checkbox
+                 id="checkbox-1"
+                 v-model="data.status"
+                 name="checkbox-1"
+                 value="true"
+                 unchecked-value="false" >
+                ไซต์ย่อย
+               </b-form-checkbox>
+          </div>
+        </div>
+            <!-- <div>State: <strong>{{ data.status }}</strong></div> -->
+      </div>
+
       <div class="column is-one-fifth">
         <a class="button is-info is-outlined" @click="add()">Add</a>
       </div>
@@ -84,6 +100,7 @@ const items = [
 export default {
   data () {
     return {
+      status: 'false',
       items: [],
       fields: [
         { key: 'Site', label: 'Site', sortable: true, sortDirection: 'desc' },
@@ -104,6 +121,14 @@ export default {
       modalInfo: { title: '', content: '' },
       show_member: '',
       data: {
+        status: 'false',
+        Detection : {
+          Detection1: '0',
+          Detection2: '0',
+          Detection3: '0',
+          Detection4: '0',
+          total: 0
+        },
         name_site: '',
         Last_maintenance: '',
         GunCheck: 1,
@@ -111,15 +136,15 @@ export default {
         Gunsound2: '1',
         Gunsound3: '1',
         Gunsound4: '1',
-        Humidity: Math.floor(Math.random() * (100 - 1 + 1)) + 1,
+        Humidity: 0,
         Sportlight1: '1',
         Sportlight2: '1',
-        num_bird: Math.floor(Math.random() * (100 - 1 + 1)) + 1,
+        num_bird: 20,
         Sportlight3: '1',
         num_day: 0,
         Sportlight4: '1',
-        Temperature: Math.floor(Math.random() * (100 - 1 + 1)) + 1 ,
-        moisture: Math.floor(Math.random() * (20000 - 1 + 1)) + 1 ,
+        Temperature: 0 ,
+        moisture: 0 ,
         Battery: Math.floor(Math.random() * (16 - 1 + 1)) + 1 ,
         cus: ''
       },
@@ -160,10 +185,10 @@ export default {
               'Site': that.show_member[variable].name_site
             },
             'Temperature': {
-              'Temperature': that.show_member[variable].Temperature
+              'Temperature': that.show_member[variable].Temperature.toFixed(2)
             },
             'Humidity': {
-              'Humidity': that.show_member[variable].Humidity
+              'Humidity': that.show_member[variable].Humidity.toFixed(2)
             },
             'Battery': {
               'Battery': that.show_member[variable].Battery

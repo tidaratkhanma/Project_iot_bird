@@ -6,7 +6,7 @@
         <div class="column is-two-fifths">
           <div class="field">
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-info" type="text" placeholder="Username" v-model="username">
+              <input class="input is-info" type="text"  @keyup.13="login()" placeholder="Username" v-model="username">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -14,7 +14,7 @@
           </div>
           <div class="field">
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-info" type="password" placeholder="Password" v-model="password">
+              <input class="input is-info" type="password"  @keyup.13="login()"placeholder="Password" v-model="password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
